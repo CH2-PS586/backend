@@ -11,14 +11,14 @@ load_dotenv()
 app = FastAPI()
 
 # Fetch sensitive information from environment variables
-key_json_content = os.getenv('KEY_JSON_CONTENT')
+# key_json_content = os.getenv('KEY_CONFIG')
 bucket_name = os.getenv('BUCKET_NAME')
 
 # Convert the environment variable containing JSON to a Python dictionary
-key_info = json.loads(key_json_content)
+#key_info = json.loads(key_json_content)
 
 # Use the fetched values
-client = storage.Client.from_service_account_info(key_info)
+client = storage.Client.from_service_account_json("./key.json")
 
 def get_category(file_extension: str):
     music_extensions = ['mp3', 'wav', 'ogg']
@@ -51,6 +51,10 @@ def upload_file_to_gcs(file: UploadFile):
 
     return {"message": f"File uploaded successfully to {category} category"}
 
-@app.post("/upload")
-async def upload(file: UploadFile = File(...)):
-    return upload_file_to_gcs(file)
+@app.post("/files")
+async def upload(files: list[UploadFile] = File(...)):
+    messages = []
+    for file in files:
+        messages.append(upload_file_to_gcs(file))
+        
+    return messages
