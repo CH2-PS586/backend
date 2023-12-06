@@ -80,20 +80,21 @@ def get_category(file_extension: str):
     else:
         return 'others'
 
-def upload_file_to_gcs(file: UploadFile, category: str, label: str = None):
-    # if category == 'unknown':
-    #     return JSONResponse(content={"error": "Unknown file type"}, status_code=400)
-
-    # Upload file to GCS bucket with the determined category as prefix
+def upload_file_to_gcs(file: UploadFile, category: str, label: str):
     if label is not None:
         blob_name = f"{category}/{label}/{file.filename}"
-        return {"message": f"File uploaded successfully to {category} category and {label} label"}
     else:
         blob_name = f"{category}/{file.filename}"
-    
-        blob = client.bucket(bucket_name).blob(blob_name)
-        blob.upload_from_file(file.file)
-        return {"message": f"File uploaded successfully to {category} category"}
+
+    blob = client.bucket(bucket_name).blob(blob_name)
+
+    # Ensure the file stream is at the beginning
+    file.file.seek(0)
+
+    blob.upload_from_file(file.file)
+
+    return {"message": f"File uploaded successfully to {category} category and {label} label" if label else f"File uploaded successfully to {category} category"}
+
 
 @app.post("/files")
 async def upload(files: list[UploadFile] = File(...)):
