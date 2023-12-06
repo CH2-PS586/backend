@@ -5,7 +5,7 @@ This guide provides step-by-step instructions for setting up and running a FastA
 ## Prerequisites
 
 - Python installed on your system
-- virtualenv installed (you can install it using pip install virtualenv)
+- virtualenv installed (you can install it using **pip install virtualenv**)
 
 ## Setup
 
@@ -15,6 +15,18 @@ Clone the Repository:
 git clone https://github.com/CH2-PS586/backend.git
 cd backend
 ```
+
+## Environment Variable
+
+1. Create Google Cloud Storage Bucket
+
+2. Create **.env**
+
+```env
+BUCKET_NAME=""
+```
+
+3. Create service account on Google Cloud Platform (GCP) with **Storage Object Admin** role and store its key on **./key.json**
 
 ## Create a Virtual Environment:
 
