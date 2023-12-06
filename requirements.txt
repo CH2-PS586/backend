@@ -1,0 +1,5 @@
+tensorflow
+fastapi
+google-cloud-storage
+python-dotenv
+numpy
