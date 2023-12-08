@@ -1,5 +1,7 @@
 tensorflow
+tensorflow_hub
 fastapi
+uvicorn
 google-cloud-storage
 python-dotenv
 numpy
