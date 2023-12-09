@@ -1,7 +1,7 @@
-tensorflow
-tensorflow_hub
+python-jose
+passlib
+uvicorn[standard]
+SQLAlchemy
+MySQL-python
+pydantic
 fastapi
-uvicorn
-google-cloud-storage
-python-dotenv
-numpy
